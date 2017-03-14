@@ -25,6 +25,7 @@
     "progress"
   ],
   "dependencies": {
+    "modify-filename": "^1.1.0",
     "pupa": "^1.0.0",
     "unused-filename": "^0.1.0"
   },

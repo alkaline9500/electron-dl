@@ -3,6 +3,7 @@ const path = require('path');
 const electron = require('electron');
 const unusedFilename = require('unused-filename');
 const pupa = require('pupa');
+const modifyFilename = require('modify-filename');
 
 const app = electron.app;
 
@@ -10,7 +11,18 @@ function registerListener(win, opts = {}, cb = () => {}) {
 	const listener = (e, item, webContents) => {
 		const totalBytes = item.getTotalBytes();
 		const dir = opts.directory || app.getPath('downloads');
-		const filePath = unusedFilename.sync(path.join(dir, item.getFilename()));
+		function filenameFromCustomExtension(filename, customExtension) {
+			if (customExtension[0] != ".") {
+				customExtension = "." + customExtension;
+			}
+			return modifyFilename(filename, (originalName, originalExt) => {
+				return originalName + customExtension;
+			});
+		}
+		const filename = opts.filename ||
+			(opts.extension ? filenameFromCustomExtension(item.getFilename(), opts.extension) : null) ||
+			item.getFilename();
+		const filePath = unusedFilename.sync(path.join(dir, filename));
 		const errorMessage = opts.errorMessage || 'The download of {filename} was interrupted';
 		const errorTitle = opts.errorTitle || 'Download Error';
 

@@ -82,6 +82,35 @@ Show a `Save As…` dialog instead of downloading immediately.
 
 Note: Only use this option when strictly necessary. Downloading directly without a prompt is a much better user experience.
 
+#### filename
+
+Type: `string`<br>
+Default: `null`
+
+The full filename (including extension) of the file to be saved. If left `null`, the filename will be determined by the download URL.
+
+Note: This option overrides the `extension` option.
+
+#### extension
+
+Type: `string`<br>
+Default: `null`
+
+The extension to be used on the saved file. The basename of the file will determined by the download URL.
+
+Some examples:
+
+| Original Filename | `extension` option | Resulting Filename
+| --- | --- | ---
+| `myfile` | `ext` | `myfile.ext`
+| `myfile` | `.ext` | `myfile.ext`
+| `myfile.jpg` | `ext` | `myfile.ext`
+| `myfile.jpg` | `.ext` | `myfile.ext`
+| `myfile.ext` | `ext` | `myfile.ext`
+| `myfile.ext` | `.ext` | `myfile.ext`
+
+Note: This option is overridden by the `filename` option, if specified.
+
 #### directory
 
 Type: `string`<br>
